@@ -1,0 +1,5 @@
+name = Responsive Images Filter
+description = A filter to convert image tags inserted using drupal's Media module into a "responsive" image tag
+core = 7.x
+
+scripts[] = jquery.responsiveimages.js

@@ -1,0 +1,55 @@
+<?php
+/*
+if (!function_exists('d')) {
+		function d($var) {
+			print '<code>';
+			print_r($var);
+			print '</code>';
+			
+			return $var;
+		}
+	}
+*/
+
+/**
+ * Implements hook_filter_info().
+ *
+ */
+function responsiveimages_filter_info() {
+	$filters['responsiveimages'] = array(
+		'title' => t('Responsive Images Filter'),
+		'description' => t('Turns normal images into "responsive" images'),
+		'process callback'  => '_responsiveimages_filter_process',
+	);
+	return $filters;
+}
+
+/**
+ * Implements hook_filter_process().
+ *
+ */
+function _responsiveimages_filter_process($html, $filter, $format) {
+	$tokens = array('480', '768', '992', '1382');
+	$baseURL = 'http://dev.thelisbonmba.com/sites/thelisbonmba.com/files/styles/';
+	
+	preg_match_all('#<img(.+)(src="(' . $baseURL . '([a-z0-9\-]+)/[^"]+)")([^>]*)>#i', $html, $matches);
+	
+	$len = count($matches[0]);
+	
+	for ($i = 0; $i < $len; $i++) {
+	    $src = array($i); 
+	
+	    foreach ($tokens as $key) {
+	        $url = str_replace($matches[4][$i], $key, $matches[3][$i]);
+	        $src[] = 'data-src-' . $key . '="' . $url .'"';
+	    }
+	
+	    reset($tokens);
+	
+	    $replacement = '<noscript>' . $matches[0][$i] . '</noscript><img' .$matches[1][$i] . implode(' ', $src) . $matches[5][$i] . '>';
+	    $html = str_replace($matches[0][$i], $replacement, $html);
+	}
+	
+	return $html;
+}
+?>
