@@ -21,6 +21,7 @@ function responsiveimages_filter_info() {
 		'default settings' => array(
 			'image_path' => 'files/styles',
 			'sizes' => array('480', '768', '992', '1382'),
+			'noscript' => 'true',
 		),
 		'settings callback' => '_responsiveimages_filter_settings',
 	);
@@ -44,11 +45,21 @@ function _responsiveimages_filter_settings($form, $form_state, $filter, $format,
 	    '#default_value' => isset($filter->settings['sizes']) ? $filter->settings['sizes'] : $defaults['sizes'],
 	    '#description' => t('Separate size values using a space, ie. "480 768"')
 	);
+	$settings['noscript'] = array(
+    	'#type' => 'radios',
+	    '#title' => t('Provide a <noscript> alternative'),
+	    '#default_value' => isset($filter->settings['noscript']) ? $filter->settings['noscript'] : $defaults['noscript'],
+		'#options' => array(
+			'true' => 'Yes',
+			'false' => 'No'
+		),
+	    '#description' => t('Provide a <noscript> tag with the default <img> tag in case there is no Javascript support.')
+	);
 	return $settings;
 }
 
 function responsiveimages_filter_settings_validate($form_id, $form_values) {
-	d($form_values);
+	//d($form_values);
 }
 
 /**
@@ -70,10 +81,13 @@ function _responsiveimages_filter_process($html, $filter, $format) {
 	        $url = str_replace($matches[4][$i], $key, $matches[3][$i]);
 	        $src[] = 'data-src-' . $key . '="' . $url .'"';
 	    }
-	
 	    reset($tokens);
-	
-	    $replacement = '<noscript>' . $matches[0][$i] . '</noscript><img' .$matches[1][$i] . implode(' ', $src) . $matches[5][$i] . '>';
+	    
+		if ($filter->settings['noscript'] == 'true') {
+	    	$replacement = '<noscript>' . $matches[0][$i] . '</noscript><img' .$matches[1][$i] . implode(' ', $src) . $matches[5][$i] . '>';
+		} else {
+			$replacement = '<img' .$matches[1][$i] . implode(' ', $src) . $matches[5][$i] . '>';
+		}
 	    $html = str_replace($matches[0][$i], $replacement, $html);
 	}
 	
