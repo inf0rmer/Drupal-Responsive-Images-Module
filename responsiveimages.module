@@ -19,7 +19,7 @@ function responsiveimages_filter_info() {
 		'description' => t('Turns normal images into "responsive" images'),
 		'process callback'  => '_responsiveimages_filter_process',
 		'default settings' => array(
-			'image_path' => file_default_scheme() . ':/files/styles',
+			'image_path' => 'files/styles',
 			'sizes' => array('480', '768', '992', '1382'),
 		),
 		'settings callback' => '_responsiveimages_filter_settings',
@@ -36,7 +36,7 @@ function _responsiveimages_filter_settings($form, $form_state, $filter, $format,
 		'#type' => 'textfield',
 		'#title' => t('Path to your images directory'),
 		'#default_value' => isset($filter->settings['image_path']) ? $filter->settings['image_path'] : $defaults['image_path'],
-		'#description' => t('The path to your image folder. Relative to ' . file_default_scheme())
+		'#description' => t('The path to your image folder. Relative to ' . file_default_scheme() . '/')
 	);
 	$settings['sizes'] = array(
     	'#type' => 'textfield',
@@ -57,7 +57,7 @@ function responsiveimages_filter_settings_validate($form_id, $form_values) {
  */
 function _responsiveimages_filter_process($html, $filter, $format) {	
 	$tokens = $filter->settings['sizes'];
-	$baseURL = $filter->settings['image_path'];
+	$baseURL = file_default_scheme() . '/' .$filter->settings['image_path'];
 	
 	preg_match_all('#<img(.+)(src="(' . $baseURL . '([a-z0-9\-]+)/[^"]+)")([^>]*)>#i', $html, $matches);
 	
