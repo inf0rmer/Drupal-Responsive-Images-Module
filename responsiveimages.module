@@ -70,7 +70,7 @@ function _responsiveimages_filter_process($html, $filter, $format) {
 	$tokens = $filter->settings['sizes'];
 	$baseURL = $base_url .$filter->settings['image_path'];
 	
-	var_dump(IMAGE_STORAGE_DEFAULT);
+	var_dump(image_style_url('thumbnail', $variables['#item']['uri']););
 	
 	preg_match_all('#<img(.+)(src="(' . $baseURL . '([a-z0-9\-]+)/[^"]+)")([^>]*)>#i', $html, $matches);
 	
