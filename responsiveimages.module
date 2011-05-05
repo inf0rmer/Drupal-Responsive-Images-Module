@@ -22,7 +22,7 @@ function responsiveimages_filter_info() {
 			'image_path' => file_default_scheme() . ':/files/styles',
 			'sizes' => array('480', '768', '992', '1382'),
 		),
-		'settings callback' => '_responsiveimags_filter_settings',
+		'settings callback' => '_responsiveimages_filter_settings',
 	);
 	return $filters;
 } 
