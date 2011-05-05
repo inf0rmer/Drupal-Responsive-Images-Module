@@ -39,7 +39,7 @@ function _responsiveimages_filter_settings($form, $form_state, $filter, $format,
 		'#type' => 'textfield',
 		'#title' => t('Path to your images directory'),
 		'#default_value' => isset($filter->settings['image_path']) ? $filter->settings['image_path'] : $defaults['image_path'],
-		'#description' => t('The path to your image folder. Relative to ' . $base_path . '/')
+		'#description' => t('The path to your image folder. Relative to ' . $base_url . '/')
 	);
 	$settings['sizes'] = array(
     	'#type' => 'textfield',
@@ -65,12 +65,12 @@ function _responsiveimages_filter_settings($form, $form_state, $filter, $format,
  *
  */
 function _responsiveimages_filter_process($html, $filter, $format) {
-	global $base_path;
+	global $base_url;
 	
 	$tokens = $filter->settings['sizes'];
-	$baseURL = $base_path . '/' .$filter->settings['image_path'];
+	$baseURL = $base_url .$filter->settings['image_path'];
 	
-	var_dump($baseURL);
+	var_dump(IMAGE_STORAGE_DEFAULT);
 	
 	preg_match_all('#<img(.+)(src="(' . $baseURL . '([a-z0-9\-]+)/[^"]+)")([^>]*)>#i', $html, $matches);
 	
