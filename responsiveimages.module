@@ -33,11 +33,13 @@ function responsiveimages_filter_info() {
  *
  */
 function _responsiveimages_filter_settings($form, $form_state, $filter, $format, $defaults) {
+	global $base_path;	
+		
 	$settings['image_path'] = array(
 		'#type' => 'textfield',
 		'#title' => t('Path to your images directory'),
 		'#default_value' => isset($filter->settings['image_path']) ? $filter->settings['image_path'] : $defaults['image_path'],
-		'#description' => t('The path to your image folder. Relative to ' . file_default_scheme() . '/')
+		'#description' => t('The path to your image folder. Relative to ' . $base_path . '/')
 	);
 	$settings['sizes'] = array(
     	'#type' => 'textfield',
@@ -62,9 +64,11 @@ function _responsiveimages_filter_settings($form, $form_state, $filter, $format,
  * Implements hook_filter_process().
  *
  */
-function _responsiveimages_filter_process($html, $filter, $format) {	
+function _responsiveimages_filter_process($html, $filter, $format) {
+	global $base_path;
+	
 	$tokens = $filter->settings['sizes'];
-	$baseURL = file_default_scheme() . '/' .$filter->settings['image_path'];
+	$baseURL = $base_path . '/' .$filter->settings['image_path'];
 	
 	var_dump($baseURL);
 	
