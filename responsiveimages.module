@@ -66,6 +66,8 @@ function _responsiveimages_filter_process($html, $filter, $format) {
 	$tokens = $filter->settings['sizes'];
 	$baseURL = file_default_scheme() . '/' .$filter->settings['image_path'];
 	
+	var_dump($baseURL);
+	
 	preg_match_all('#<img(.+)(src="(' . $baseURL . '([a-z0-9\-]+)/[^"]+)")([^>]*)>#i', $html, $matches);
 	
 	$len = count($matches[0]);
