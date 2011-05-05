@@ -27,6 +27,8 @@ function responsiveimages_filter_info() {
  *
  */
 function _responsiveimages_filter_process($html, $filter, $format) {
+	global $base_url;
+	
 	$tokens = array('480', '768', '992', '1382');
 	$baseURL = 'http://dev.thelisbonmba.com/sites/thelisbonmba.com/files/styles/';
 	
