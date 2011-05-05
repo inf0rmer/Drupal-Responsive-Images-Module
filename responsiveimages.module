@@ -58,10 +58,6 @@ function _responsiveimages_filter_settings($form, $form_state, $filter, $format,
 	return $settings;
 }
 
-function responsiveimages_filter_settings_validate($form_id, $form_values) {
-	//d($form_values);
-}
-
 /**
  * Implements hook_filter_process().
  *
