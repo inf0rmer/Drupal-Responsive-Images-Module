@@ -19,25 +19,45 @@ function responsiveimages_filter_info() {
 		'description' => t('Turns normal images into "responsive" images'),
 		'process callback'  => '_responsiveimages_filter_process',
 		'default settings' => array(
-			'image_path' => file_default_scheme() . ':/' ,
+			'image_path' => file_default_scheme() . ':/files/styles',
+			'sizes' => array('480', '768', '992', '1382'),
 		),
 		'settings callback' => '_responsiveimags_filter_settings',
 	);
 	return $filters;
+} 
+
+/**
+ * Settings callback 
+ *
+ */
+function _responsiveimages_filter_settings($form, $form_state, $filter, $format, $defaults) {
+	$settings['image_path'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Path to your images directory'),
+		'#default_value' => isset($filter->settings['image_path']) ? $filter->settings['image_path'] : $defaults['image_path'],
+		'#description' => t('The path to your image folder. Relative to ' . file_default_scheme());
+	);
+	$settings['sizes'] = array(
+    	'#type' => 'textfield',
+	    '#title' => t('Image sizes to consider'),
+	    '#default_value' => isset($filter->settings['sizes']) ? $filter->settings['sizes'] : $defaults['sizes'],
+	    '#description' => t('Separate size values using a comma, ie. "480, 768"');
+	);
+	return $settings;
+}
+
+function responsiveimages_filter_settings_validate($form_id, $form_values) {
+	d($form_values);
 }
 
 /**
  * Implements hook_filter_process().
  *
  */
-function _responsiveimages_filter_process($html, $filter, $format) {
-	global $base_url;
-	
-	$tokens = array('480', '768', '992', '1382');
-	//$baseURL = $base_url . '/sites/thelisbonmba.com/files/styles/';
-	$baseURL = file_default_scheme() . ':/files/styles';
-	
-	var_dump($baseURL);
+function _responsiveimages_filter_process($html, $filter, $format) {	
+	$tokens = $filter->settings['sizes'];
+	$baseURL = $filter->settings['image_path'];
 	
 	preg_match_all('#<img(.+)(src="(' . $baseURL . '([a-z0-9\-]+)/[^"]+)")([^>]*)>#i', $html, $matches);
 	
