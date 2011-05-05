@@ -53,7 +53,7 @@ function _responsiveimages_filter_settings($form, $form_state, $filter, $format,
 			'true' => 'Yes',
 			'false' => 'No'
 		),
-	    '#description' => t('Provide a <noscript> tag with the default <img> tag in case there is no Javascript support.')
+	    '#description' => t('Provide a &lt;noscript&gt; tag with the default <img> tag in case there is no Javascript support.')
 	);
 	return $settings;
 }
