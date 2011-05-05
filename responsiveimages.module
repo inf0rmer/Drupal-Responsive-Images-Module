@@ -47,7 +47,7 @@ function _responsiveimages_filter_settings($form, $form_state, $filter, $format,
 	);
 	$settings['noscript'] = array(
     	'#type' => 'radios',
-	    '#title' => t('Provide a <noscript> alternative'),
+	    '#title' => t('Provide a &lt;noscript&gt; alternative'),
 	    '#default_value' => isset($filter->settings['noscript']) ? $filter->settings['noscript'] : $defaults['noscript'],
 		'#options' => array(
 			'true' => 'Yes',
