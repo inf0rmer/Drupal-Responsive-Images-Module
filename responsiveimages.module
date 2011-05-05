@@ -36,7 +36,8 @@ function _responsiveimages_filter_process($html, $filter, $format) {
 	var_dump(file_default_scheme() . ':/' );
 	
 	$tokens = array('480', '768', '992', '1382');
-	$baseURL = $base_url . '/sites/thelisbonmba.com/files/styles/';
+	//$baseURL = $base_url . '/sites/thelisbonmba.com/files/styles/';
+	$baseURL = file_default_scheme() . ':/files/styles';
 	
 	preg_match_all('#<img(.+)(src="(' . $baseURL . '([a-z0-9\-]+)/[^"]+)")([^>]*)>#i', $html, $matches);
 	
