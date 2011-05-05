@@ -33,7 +33,7 @@ function responsiveimages_filter_info() {
  *
  */
 function _responsiveimages_filter_settings($form, $form_state, $filter, $format, $defaults) {
-	global $base_path;	
+	global $base_url;	
 		
 	$settings['image_path'] = array(
 		'#type' => 'textfield',
@@ -66,16 +66,15 @@ function _responsiveimages_filter_settings($form, $form_state, $filter, $format,
  */
 function _responsiveimages_filter_process($html, $filter, $format) {
 	global $base_url;
-	
-	$tokens = $filter->settings['sizes'];
-	$baseURL = $base_url .$filter->settings['image_path'];
-	
-	var_dump(image_style_url('thumbnail', $variables['#item']['uri']););
-	
-	preg_match_all('#<img(.+)(src="(' . $baseURL . '([a-z0-9\-]+)/[^"]+)")([^>]*)>#i', $html, $matches);
-	
-	$len = count($matches[0]);
-	
+
+    $tokens = explode(' ', $filter->settings['sizes']);
+
+	$baseURL = $base_url . '/' . $filter->settings['image_path'];
+
+    preg_match_all('#<img(.+)(src="(' . $baseURL . '([a-z0-9\-]+)/[^"]+)")([^>]*)>#i', $html, $matches);
+    $len = count($matches[0]);
+
+
 	for ($i = 0; $i < $len; $i++) {
 	    $src = array($i); 
 	
