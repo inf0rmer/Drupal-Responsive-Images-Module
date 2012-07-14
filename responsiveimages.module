@@ -1,13 +1,4 @@
 <?php
-if (!function_exists('d')) {
-	function d($var) {
-		print '<code>';
-		print_r($var);
-		print '</code>';
-		
-		return $var;
-	}
-}   
 
 /**
  * Implements hook_filter_info().
@@ -26,15 +17,15 @@ function responsiveimages_filter_info() {
 		'settings callback' => '_responsiveimages_filter_settings',
 	);
 	return $filters;
-} 
+}
 
 /**
- * Settings callback 
+ * Settings callback
  *
  */
 function _responsiveimages_filter_settings($form, $form_state, $filter, $format, $defaults) {
-	global $base_url;	
-		
+	global $base_url;
+
 	$settings['image_path'] = array(
 		'#type' => 'textfield',
 		'#title' => t('Path to your images directory'),
@@ -76,14 +67,14 @@ function _responsiveimages_filter_process($html, $filter, $format) {
 
 
 	for ($i = 0; $i < $len; $i++) {
-	    $src = array($i); 
-	
+	    $src = array($i);
+
 	    foreach ($tokens as $key) {
 	        $url = str_replace($matches[4][$i], $key, $matches[3][$i]);
 	        $src[] = 'data-src-' . $key . '="' . $url .'"';
 	    }
 	    reset($tokens);
-	    
+
 		if ($filter->settings['noscript'] == 'true') {
 	    	$replacement = '<noscript>' . $matches[0][$i] . '</noscript><img' .$matches[1][$i] . implode(' ', $src) . $matches[5][$i] . '>';
 		} else {
@@ -91,7 +82,7 @@ function _responsiveimages_filter_process($html, $filter, $format) {
 		}
 	    $html = str_replace($matches[0][$i], $replacement, $html);
 	}
-	
+
 	return $html;
 }
 ?>
