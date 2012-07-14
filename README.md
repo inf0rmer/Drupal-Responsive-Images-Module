@@ -3,13 +3,18 @@ image tags to "responsive" tags.
 
 What does this mean?
 --------------------
-The plugin takes a regularly formed <img> tag:
-    <img alt="An image" src="http://example.com/image.jpg"
+The plugin takes a regularly formed ```<img>``` tag:
+```html
+<img alt="An image" src="http://example.com/image.jpg"
+```
+
 And transforms it into:
-    <img alt="An image" data-src-480="http://example.com/480/image.jpg"
+```html
+<img alt="An image" data-src-480="http://example.com/480/image.jpg"
 data-src-768="http://example.com/768/image.jpg"
 data-src-992="http://example.com/992/image.jpg"
 data-src-1382="http://example.com/1382/image.jpg" />
+```
 
 And what is the point of all this?
 ----------------------------------
